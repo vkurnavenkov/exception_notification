@@ -17,8 +17,8 @@ There's a great [Railscast about Exception Notification](http://railscasts.com/e
 
 ## Requirements
 
-* Ruby 2.0 or greater
-* Rails 4.0 or greater, Sinatra or another Rack-based application.
+* Ruby 2.2.2 or greater
+* Rails 5.0 or greater, Sinatra or another Rack-based application.
 
 For previous releases, please checkout [this](#versions).
 
