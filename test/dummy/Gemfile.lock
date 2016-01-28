@@ -1,9 +1,9 @@
 PATH
   remote: ../../..
   specs:
-    exception_notification (4.1.2)
-      actionmailer (= 5.0.0.beta1)
-      activesupport (= 5.0.0.beta1)
+    exception_notification (5.0.0)
+      actionmailer (~> 5.0.0.beta)
+      activesupport (~> 5.0.0.beta)
 
 GEM
   remote: http://rubygems.org/
@@ -186,7 +186,7 @@ PLATFORMS
 DEPENDENCIES
   exception_notification!
   httparty
-  rails (= 5.0.0.beta1)
+  rails (~> 5.0.0.beta)
   sqlite3
   tinder
 
