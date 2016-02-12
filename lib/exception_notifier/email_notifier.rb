@@ -9,7 +9,8 @@ module ExceptionNotifier
     :pre_callback, :post_callback,
     :email_prefix, :email_format, :sections, :background_sections,
     :verbose_subject, :normalize_subject, :delivery_method, :mailer_settings,
-    :email_headers, :mailer_parent, :template_path, :deliver_with)
+    :email_headers, :mailer_parent, :template_path, :deliver_with,
+    :skip_subject_action_name, :skip_subject_class_name)
 
     module Mailer
       class MissingController
@@ -56,8 +57,8 @@ module ExceptionNotifier
 
           def compose_subject
             subject = "#{@options[:email_prefix]}"
-            subject << "#{@kontroller.controller_name}##{@kontroller.action_name}" if @kontroller
-            subject << " (#{@exception.class})"
+            subject << "#{@kontroller.controller_name}##{@kontroller.action_name}" if @kontroller && !@options[:skip_subject_action_name]
+            subject << " (#{@exception.class})" unless @options[:skip_subject_class_name]
             subject << " #{@exception.message.inspect}" if @options[:verbose_subject]
             subject = EmailNotifier.normalize_digits(subject) if @options[:normalize_subject]
             subject.length > 120 ? subject[0...120] + "..." : subject
@@ -133,7 +134,8 @@ module ExceptionNotifier
         :pre_callback, :post_callback,
         :email_prefix, :email_format, :sections, :background_sections,
         :verbose_subject, :normalize_subject, :delivery_method, :mailer_settings,
-        :email_headers, :mailer_parent, :template_path, :deliver_with].include?(k)}.each{|k,v| send("#{k}=", v)}
+        :email_headers, :mailer_parent, :template_path, :deliver_with,
+        :skip_subject_action_name, :skip_subject_class_name].include?(k)}.each{|k,v| send("#{k}=", v)}
     end
 
     def options
@@ -193,7 +195,9 @@ module ExceptionNotifier
         :email_headers => {},
         :mailer_parent => 'ActionMailer::Base',
         :template_path => 'exception_notifier',
-        :deliver_with => :default
+        :deliver_with => :default,
+        :skip_subject_action_name => false,
+        :skip_subject_class_name => false
       }
     end
 
